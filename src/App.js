@@ -5,6 +5,8 @@ import TableView from "./Components/TableView";
 import DroppingAreaView from "./Components/DroppingAreaView";
 import Card from "./Containers/Card";
 import { Provider } from "react-redux";
+import { DragDropContext } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
 
 const initialState = {
   cards: []
@@ -13,7 +15,7 @@ const initialState = {
 const createCards = () => {
   for (let i = 0; i < 5; i++) {
     let tempCard = {
-      name: Date.now(),
+      name: Date.now() + i,
       timesDropped: 0
     };
 
@@ -63,4 +65,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default DragDropContext(HTML5Backend)(App);

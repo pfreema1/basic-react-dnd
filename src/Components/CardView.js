@@ -12,8 +12,15 @@ const styling = {
   borderRadius: "5px"
 };
 
-const CardView = ({ name, timesDropped, top, left }) => (
-  <div style={{ ...styling, top: top + "%", left: left + "%" }}>
+const CardView = ({ name, timesDropped, top, left, isDragging }) => (
+  <div
+    style={{
+      ...styling,
+      top: top + "%",
+      left: left + "%",
+      background: isDragging ? "skyblue" : ColorPalette.fourth
+    }}
+  >
     name: {name} timesDropped: {timesDropped}
   </div>
 );
