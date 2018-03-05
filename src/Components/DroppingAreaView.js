@@ -1,19 +1,27 @@
-import React from "react";
-import ColorPalette from "../ColorPalette";
+import React from 'react';
+import ColorPalette from '../ColorPalette';
 
 const styling = {
-  width: "300px",
-  height: "300px",
-  borderRadius: "10px",
-  border: "5px dashed white",
+  width: '300px',
+  height: '300px',
+  borderRadius: '10px',
+  border: '5px dashed white',
   background: ColorPalette.third,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center"
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  transition: 'all 0.5s'
 };
 
-const DroppingAreaView = () => (
-  <div style={styling}>Hello im dropping area</div>
+const DroppingAreaView = ({ isOver }) => (
+  <div
+    style={{
+      ...styling,
+      border: isOver ? '10px solid white' : '5px dashed white'
+    }}
+  >
+    Hello im dropping area
+  </div>
 );
 
 export default DroppingAreaView;

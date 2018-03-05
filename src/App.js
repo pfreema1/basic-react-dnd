@@ -1,12 +1,14 @@
-import React, { Component } from "react";
-import "./App.css";
-import { createStore } from "redux";
-import TableView from "./Components/TableView";
-import DroppingAreaView from "./Components/DroppingAreaView";
-import Card from "./Containers/Card";
-import { Provider } from "react-redux";
-import { DragDropContext } from "react-dnd";
-import HTML5Backend from "react-dnd-html5-backend";
+import React, { Component } from 'react';
+import './App.css';
+import { createStore } from 'redux';
+import TableView from './Components/TableView';
+
+import Card from './Containers/Card';
+import { Provider } from 'react-redux';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import DroppingArea from './Containers/DroppingArea';
+import CardWrapperView from './Components/CardWrapperView';
 
 const initialState = {
   cards: []
@@ -31,9 +33,21 @@ createCards();
  *****************/
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "CARD_DROPPED": {
+    case 'CARD_DROPPED': {
+      let droppedCard = action.card;
+
+      let newCardArr = state.cards.map(card => {
+        let tempCard = { ...card };
+        if (droppedCard.name === card.name) {
+          tempCard.timesDropped++;
+        }
+
+        return tempCard;
+      });
+
       return {
-        ...state
+        ...state,
+        cards: newCardArr
       };
     }
     default:
@@ -52,13 +66,17 @@ class App extends Component {
       <Provider store={store}>
         <div>
           <TableView>
-            <DroppingAreaView />
+            <DroppingArea />
           </TableView>
-          {cards.map((card, index) => {
-            let top = Math.floor(Math.random() * 100);
-            let left = Math.floor(Math.random() * 100);
-            return <Card top={top} left={left} key={index} cardIndex={index} />;
-          })}
+          <CardWrapperView>
+            {cards.map((card, index) => {
+              let top = Math.floor(Math.random() * 100);
+              let left = Math.floor(Math.random() * 100);
+              return (
+                <Card top={top} left={left} key={index} cardIndex={index} />
+              );
+            })}
+          </CardWrapperView>
         </div>
       </Provider>
     );

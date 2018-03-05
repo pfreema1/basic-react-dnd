@@ -1,24 +1,24 @@
-import React from "react";
-import ColorPalette from "../ColorPalette";
+import React from 'react';
+import ColorPalette from '../ColorPalette';
 
 const styling = {
-  width: "200px",
-  height: "70px",
+  width: '200px',
+  height: '70px',
   background: ColorPalette.fourth,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  position: "absolute",
-  borderRadius: "5px"
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  // position: "absolute",
+  borderRadius: '5px'
 };
 
 const CardView = ({ name, timesDropped, top, left, isDragging }) => (
   <div
     style={{
       ...styling,
-      top: top + "%",
-      left: left + "%",
-      background: isDragging ? "skyblue" : ColorPalette.fourth
+      top: top + '%',
+      left: left + '%',
+      background: isDragging ? 'skyblue' : ColorPalette.fourth
     }}
   >
     name: {name} timesDropped: {timesDropped}

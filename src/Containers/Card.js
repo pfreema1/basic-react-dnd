@@ -1,7 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
-import CardView from "../Components/CardView";
-import { DragSource } from "react-dnd";
+import React from 'react';
+import { connect } from 'react-redux';
+import CardView from '../Components/CardView';
+import { DragSource } from 'react-dnd';
 
 //specifies the drag source contract
 const cardSource = {
@@ -9,6 +9,7 @@ const cardSource = {
     let { cards, cardIndex } = props;
     // return the data describing the dragged item
     const item = cards[cardIndex];
+
     return item;
   },
 
@@ -24,8 +25,10 @@ const cardSource = {
     }
 
     //when dropped on a compatible target, do something
-    const item = monitor.getItem();
+    const card = monitor.getItem();
     const dropResult = monitor.getDropResult();
+
+    props.dispatch({ type: 'CARD_DROPPED', card });
   }
 };
 
@@ -68,5 +71,5 @@ const mapStateToProps = state => {
   };
 };
 
-Card = DragSource("card", cardSource, collect)(Card);
+Card = DragSource('card', cardSource, collect)(Card);
 export default connect(mapStateToProps)(Card);
