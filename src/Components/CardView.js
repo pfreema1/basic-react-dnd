@@ -10,19 +10,20 @@ const styling = {
   alignItems: 'center',
   // position: "absolute",
   borderRadius: '5px',
-  cursor: 'move'
+  color: 'white',
+  cursor: 'move',
+  border: '1px solid skyblue'
 };
 
-const CardView = ({ name, timesDropped, top, left, isDragging }) => (
+const CardView = ({ name, timesDropped, isDragging }) => (
   <div
     style={{
       ...styling,
-      top: top + '%',
-      left: left + '%',
+
       background: isDragging ? 'skyblue' : ColorPalette.fourth
     }}
   >
-    name: {name} timesDropped: {timesDropped}
+    name: {name}
   </div>
 );
 

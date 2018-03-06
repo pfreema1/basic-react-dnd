@@ -11,13 +11,16 @@ import DroppingArea from './Containers/DroppingArea';
 import CardWrapperView from './Components/CardWrapperView';
 
 const initialState = {
-  cards: []
+  cards: [],
+  droppedCards: []
 };
+
+const nameArr = ['foo', 'fee', 'bar', 'baz', 'bat'];
 
 const createCards = () => {
   for (let i = 0; i < 5; i++) {
     let tempCard = {
-      name: Date.now() + i,
+      name: nameArr[i],
       timesDropped: 0
     };
 
@@ -34,20 +37,13 @@ createCards();
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'CARD_DROPPED': {
-      let droppedCard = action.card;
+      let droppedCard = { ...action.item };
 
-      let newCardArr = state.cards.map(card => {
-        let tempCard = { ...card };
-        if (droppedCard.name === card.name) {
-          tempCard.timesDropped++;
-        }
-
-        return tempCard;
-      });
+      let newDroppedCardArr = state.droppedCards.concat(droppedCard);
 
       return {
         ...state,
-        cards: newCardArr
+        droppedCards: newDroppedCardArr
       };
     }
     default:
@@ -70,11 +66,7 @@ class App extends Component {
           </TableView>
           <CardWrapperView>
             {cards.map((card, index) => {
-              let top = Math.floor(Math.random() * 100);
-              let left = Math.floor(Math.random() * 100);
-              return (
-                <Card top={top} left={left} key={index} cardIndex={index} />
-              );
+              return <Card key={index} cardIndex={index} />;
             })}
           </CardWrapperView>
         </div>

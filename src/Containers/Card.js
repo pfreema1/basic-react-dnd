@@ -1,8 +1,12 @@
 import React from 'react';
+import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
 import CardView from '../Components/CardView';
-import { DragSource } from 'react-dnd';
+import { DragSource, DropTarget } from 'react-dnd';
 
+/*****************************/
+//card drag source methods
+/*****************************/
 //specifies the drag source contract
 const cardSource = {
   beginDrag(props) {
@@ -27,13 +31,22 @@ const cardSource = {
     //when dropped on a compatible target, do something
     const card = monitor.getItem();
     const dropResult = monitor.getDropResult();
-
-    props.dispatch({ type: 'CARD_DROPPED', card });
   }
 };
 
+/*****************************/
+// card drop target methods
+/*****************************/
+const cardTarget = {
+  hover(props, monitor, component) {}
+};
+
+/*****************************/
+//collect functions
+/*****************************/
+
 //specifies which props to inject into component
-function collect(connect, monitor) {
+function dragSourceCollect(connect, monitor) {
   return {
     // Call this function inside render()
     // to let React DnD handle the drag events:
@@ -43,24 +56,30 @@ function collect(connect, monitor) {
   };
 }
 
+function dropTargetCollect(connect) {
+  return {
+    connectDropTarget: connect.dropTarget()
+  };
+}
+
 class Card extends React.Component {
   render() {
-    let { cardIndex, cards, top, left } = this.props;
+    let { cardIndex, cards } = this.props;
 
-    // These two props are injected by React DnD,
+    // These props are injected by React DnD,
     // as defined by your `collect` function above:
-    const { isDragging, connectDragSource } = this.props;
+    const { isDragging, connectDragSource, connectDropTarget } = this.props;
 
     return connectDragSource(
-      <div>
-        <CardView
-          name={cards[cardIndex].name}
-          timesDropped={cards[cardIndex].timesDropped}
-          top={top}
-          left={left}
-          isDragging={isDragging}
-        />
-      </div>
+      connectDropTarget(
+        <div>
+          <CardView
+            name={cards[cardIndex].name}
+            timesDropped={cards[cardIndex].timesDropped}
+            isDragging={isDragging}
+          />
+        </div>
+      )
     );
   }
 }
@@ -71,5 +90,6 @@ const mapStateToProps = state => {
   };
 };
 
-Card = DragSource('card', cardSource, collect)(Card);
+Card = DropTarget('card', cardTarget, dropTargetCollect)(Card);
+Card = DragSource('card', cardSource, dragSourceCollect)(Card);
 export default connect(mapStateToProps)(Card);
