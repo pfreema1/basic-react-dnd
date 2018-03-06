@@ -46,6 +46,28 @@ const reducer = (state = initialState, action) => {
         droppedCards: newDroppedCardArr
       };
     }
+    case 'NEW_CARD_HOVER_BEGIN': {
+      let newCard = { ...action.card };
+
+      let newDroppedCardArr = state.droppedCards.concat(newCard);
+
+      return {
+        ...state,
+        droppedCards: newDroppedCardArr
+      };
+    }
+    case 'CARD_DROPPED_OUTSIDE_DROP_TARGET': {
+      let droppedCard = { ...action.card };
+
+      let newDroppedCardArr = state.droppedCards.filter(card => {
+        return droppedCard.UID !== card.UID;
+      });
+
+      return {
+        ...state,
+        droppedCards: newDroppedCardArr
+      };
+    }
     default:
       return state;
   }
