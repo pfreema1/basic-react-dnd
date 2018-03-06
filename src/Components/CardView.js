@@ -9,7 +9,8 @@ const styling = {
   justifyContent: 'center',
   alignItems: 'center',
   // position: "absolute",
-  borderRadius: '5px'
+  borderRadius: '5px',
+  cursor: 'move'
 };
 
 const CardView = ({ name, timesDropped, top, left, isDragging }) => (

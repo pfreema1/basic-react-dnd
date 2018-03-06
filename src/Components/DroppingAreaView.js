@@ -2,8 +2,8 @@ import React from 'react';
 import ColorPalette from '../ColorPalette';
 
 const styling = {
-  width: '300px',
-  height: '300px',
+  width: '80vw',
+  height: '150px',
   borderRadius: '10px',
   border: '5px dashed white',
   background: ColorPalette.third,
